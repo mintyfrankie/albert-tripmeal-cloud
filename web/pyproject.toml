@@ -1,0 +1,36 @@
+[project]
+name = "web"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "mintyfrankie", email = "77310871+mintyfrankie@users.noreply.github.com" },
+]
+dependencies = [
+    "Flask==1.0",
+    "Flask-WTF==0.14.2",
+    "Jinja2==2.10",
+    "MarkupSafe==0.23",
+    "WTForms==2.1",
+    "Werkzeug==0.15.3",
+    "click==6.7",
+    "cryptography",
+    "gunicorn==19.6.0",
+    "itsdangerous==0.24",
+    "passlib==1.7.1",
+    "pymysql",
+]
+requires-python = ">= 3.8"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
