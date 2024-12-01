@@ -1,3 +1,35 @@
-version: "3"
+name: tripmeal
 
-# COMPLETE THIS FILE
+services:
+  web:
+    container_name: tripmeal-web
+    build: ./web
+    restart: unless-stopped
+    depends_on:
+      - db
+    env_file:
+      - tripmeal.env
+    ports:
+      - 5001:5000
+    networks:
+      - web
+
+  db:
+    container_name: tripmeal-db
+    build: ./db
+    restart: unless-stopped
+    env_file:
+      - tripmeal.env
+    expose:
+      - 3306
+    networks:
+      - web
+    volumes:
+      - data:/var/lib/mysql
+
+volumes:
+  data:
+
+networks:
+  web:
+    driver: bridge
