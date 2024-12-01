@@ -9,39 +9,26 @@
 #   generate-hashes: false
 #   universal: false
 
--e file:.
 cffi==1.17.1
     # via cryptography
 click==6.7
     # via flask
-    # via web
 cryptography==44.0.0
-    # via web
 flask==1.0
     # via flask-wtf
-    # via web
 flask-wtf==0.14.2
-    # via web
 gunicorn==19.6.0
-    # via web
 itsdangerous==0.24
     # via flask
-    # via web
 jinja2==2.10
     # via flask
-    # via web
 markupsafe==0.23
     # via jinja2
-    # via web
 passlib==1.7.1
-    # via web
 pycparser==2.22
     # via cffi
 pymysql==1.1.1
-    # via web
 werkzeug==0.15.3
     # via flask
-    # via web
 wtforms==2.1
     # via flask-wtf
-    # via web
