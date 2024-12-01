@@ -1,38 +1,39 @@
+from typing import Dict, Tuple, Any
 import pymysql
-try:
-    import urlparse
-except ModuleNotFoundError:
-    from urllib import parse as urlparse
+from urllib import parse as urlparse
 import os
+from pymysql.connections import Connection
+from pymysql.cursors import Cursor
 
-urlparse.uses_netloc.append('mysql')
+__all__ = ["connection"]
 
-try:
-    if 'DATABASES' not in locals():
-        DATABASES = {}
+# Initialize urlparse for mysql
+urlparse.uses_netloc.append("mysql")
 
-    # Ensure default database exists.
-    DATABASES['default'] = DATABASES.get('default', {})
-
-    # Update with environment configuration.
-    DATABASES['default'].update({
-        'NAME': os.environ['DATABASE_NAME'],
-        'USER': os.environ['DATABASE_USER'],
-        'PASSWORD': os.environ['MYSQL_ROOT_PASSWORD'],
-        'HOST': os.environ['DATABASE_HOST'],
-        'PORT': os.environ['DATABASE_PORT'],
-        'ENGINE': 'django.db.backends.mysql'
-    })
-
-except Exception:
-    print('Unexpected error:', sys.exc_info())
+# Initialize DATABASES dict
+DATABASES: Dict[str, Dict[str, Any]] = {
+    "default": {
+        "NAME": os.environ["DATABASE_NAME"],
+        "USER": os.environ["DATABASE_USER"],
+        "PASSWORD": os.environ["MYSQL_ROOT_PASSWORD"],
+        "HOST": os.environ["DATABASE_HOST"],
+        "PORT": os.environ["DATABASE_PORT"],
+        "ENGINE": "django.db.backends.mysql",
+    }
+}
 
 
-def connection():
-    conn = pymysql.connect(host=DATABASES['default']['HOST'],
-                           user=DATABASES['default']['USER'],
-                           password=DATABASES['default']['PASSWORD'],
-                           database=DATABASES['default']['NAME']
-                           )
+def connection() -> Tuple[Cursor, Connection]:
+    """Create database connection and return cursor and connection objects.
+
+    Returns:
+        Tuple containing database cursor and connection objects
+    """
+    conn = pymysql.connect(
+        host=DATABASES["default"]["HOST"],
+        user=DATABASES["default"]["USER"],
+        password=DATABASES["default"]["PASSWORD"],
+        database=DATABASES["default"]["NAME"],
+    )
     c = conn.cursor()
     return c, conn
